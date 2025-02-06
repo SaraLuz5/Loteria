@@ -87,11 +87,11 @@ function calculaTotalGasto($quantidade, $precoPorAposta) {
 
 function exibeNumerosPossiveis($minimoNumeros, $maximoNumeros) {
     
-    echo "Números possíveis: ";
+    print "Números possíveis: ";
     for ($i = $minimoNumeros; $i <= $maximoNumeros; $i++) {
-        echo "$i ";
+        print "$i ";
     }
-    echo "\n";
+    print "\n";
 }
 
 function verificaResultado($numerosSorteados, $nossaAposta) {
@@ -108,35 +108,35 @@ function verificaResultado($numerosSorteados, $nossaAposta) {
 
     if ($numerosAcertados === count($numerosSorteados)) {
         
-        echo "Parabéns! Você ganhou!\n";
+        print "Parabéns! Você ganhou!\n";
 
     } else if ($numerosAcertados === 0){
        
-        echo "Você não acertou nenhuma dezena";
+        print "Você não acertou nenhuma dezena";
 
     } else {
         
-        echo "Você não ganhou, mas você acertou $numerosAcertados dezenas.\n";
+        print "Você não ganhou, mas você acertou $numerosAcertados dezenas.\n";
 
     }
 }
 
 
-echo "Escolha a loteria:\n";
-foreach ($loterias as $loteria => $params) {
-    echo "- $loteria (Quantidade mínima: {$params['minimoDezenas']}, Quantidade máxima: {$params['maximoDezenas']})\n";
+print "Escolha a loteria:\n";
+foreach ($loterias as $loteria => $parametros) {
+    print "- $loteria (Quantidade mínima: {$parametros['minimoDezenas']}, Quantidade máxima: {$parametros['maximoDezenas']})\n";
 }
 
 $jogoEscolhido = readline("Digite o nome da loteria desejada: ");
 if (!isset($loterias[$jogoEscolhido])) {
-    echo "Loteria não encontrada.\n";
+    print "Loteria não encontrada.\n";
     exit();
 }
 
-$params = $loterias[$jogoEscolhido];
+$parametros = $loterias[$jogoEscolhido];
 
-echo "\nNúmeros possíveis para $jogoEscolhido: ";
-exibeNumerosPossiveis($params['minimoNumeros'], $params['maximoNumeros']);
+print "\nNúmeros possíveis para $jogoEscolhido: ";
+exibeNumerosPossiveis($parametros['minimoNumeros'], $parametros['maximoNumeros']);
 
 $opcaoApostaAleatoria = readline("Deseja criar uma aposta aleatória? (sim/não): ");
 if (strtolower($opcaoApostaAleatoria) === 'sim') {
@@ -144,35 +144,35 @@ if (strtolower($opcaoApostaAleatoria) === 'sim') {
     do {
         $numeroDezenas = intval(readline("Quantos números você quer na aposta? "));
 
-    } while ($numeroDezenas < $params['minimoDezenas'] || $numeroDezenas > $params['maximoDezenas']);
+    } while ($numeroDezenas < $parametros['minimoDezenas'] || $numeroDezenas > $parametros['maximoDezenas']);
 
 
-    $numerosEscolhidos = geraApostaAleatoria($params['minimoNumeros'], $params['maximoNumeros'], $params['minimoDezenas']);
+    $numerosEscolhidos = geraApostaAleatoria($parametros['minimoNumeros'], $parametros['maximoNumeros'], $parametros['minimoDezenas']);
     
-    echo "Quantidade de apostas desejadas: ";
+    print "Quantidade de apostas desejadas: ";
     $quantidadeApostas = intval(readline());
 
-    $numerosSorteados = geraApostaAleatoria($params['minimoNumeros'], $params['maximoNumeros'], $params['minimoDezenas']);
+    $numerosSorteados = geraApostaAleatoria($parametros['minimoNumeros'], $parametros['maximoNumeros'], $parametros['minimoDezenas']);
     
-    echo "\nNúmeros sorteados: " . join(' ', $numerosSorteados) . "\n";
+    print "\nNúmeros sorteados: " . join(' ', $numerosSorteados) . "\n";
     
     if ($quantidadeApostas > 1) {
-        echo "\nApostas aleatórias geradas pelo sistema:\n";
+        print "\nApostas aleatórias geradas pelo sistema:\n";
         for ($i = 0; $i < $quantidadeApostas; $i++) {
-            $apostaAleatoria = geraApostaAleatoria($params['minimoNumeros'], $params['maximoNumeros'], $params['minimoDezenas']);
-            echo "Aposta " . ($i + 1) . ": " . join(' ', $apostaAleatoria) . "\n";
+            $apostaAleatoria = geraApostaAleatoria($parametros['minimoNumeros'], $parametros['maximoNumeros'], $parametros['minimoDezenas']);
+            print "Aposta " . ($i + 1) . ": " . join(' ', $apostaAleatoria) . "\n";
 
             verificaResultado($numerosSorteados, $apostaAleatoria);
-            echo "\n";
+            print "\n";
         }
     } else if ($quantidadeApostas == 1){
-        echo "\nAposta aleatória gerada pelo sistema:\n";
+        print "\nAposta aleatória gerada pelo sistema:\n";
         for ($i = 0; $i < $quantidadeApostas; $i++) {
-            $apostaAleatoria = geraApostaAleatoria($params['minimoNumeros'], $params['maximoNumeros'], $params['minimoDezenas']);
-            echo "Aposta " . ($i + 1) . ": " . join(' ', $apostaAleatoria) . "\n";
+            $apostaAleatoria = geraApostaAleatoria($parametros['minimoNumeros'], $parametros['maximoNumeros'], $parametros['minimoDezenas']);
+            print "Aposta " . ($i + 1) . ": " . join(' ', $apostaAleatoria) . "\n";
 
             verificaResultado($numerosSorteados, $apostaAleatoria);
-            echo "\n";
+            print "\n";
         }
     }
 } else if (strtolower($opcaoApostaAleatoria) === 'não'){ 
@@ -183,34 +183,34 @@ if (strtolower($opcaoApostaAleatoria) === 'sim') {
 
     $quantidadeApostas = intval(readline("Quantidade de apostas que serão realizadas: \n"));
     
-    if (count($numerosEscolhidos) < $params['minimoDezenas'] || count($numerosEscolhidos) > $params['maximoDezenas']) {
-        echo "Quantidade inválida de números para esta loteria.\n";
+    if (count($numerosEscolhidos) < $parametros['minimoDezenas'] || count($numerosEscolhidos) > $parametros['maximoDezenas']) {
+        print "Quantidade inválida de números para esta loteria.\n";
         exit();
     }
   
     foreach ($numerosEscolhidos as $numero) {
-        if ($numero < $params['minNum'] || $numero > $params['maxNum']) {
-            echo "Número fora do intervalo permitido para esta loteria.\n";
+        if ($numero < $parametros['minNum'] || $numero > $parametros['maxNum']) {
+            print "Número fora do intervalo permitido para esta loteria.\n";
             exit();
         }
     }
 
-    $numerosSorteados = geraApostaAleatoria($params['minimoNumeros'], $params['maximoNumeros'], $params['minimoDezenas']);
+    $numerosSorteados = geraApostaAleatoria($parametros['minimoNumeros'], $parametros['maximoNumeros'], $parametros['minimoDezenas']);
     
-    echo "\nNúmeros sorteados: " . join(' ', $numerosSorteados) . "\n";
+    print "\nNúmeros sorteados: " . join(' ', $numerosSorteados) . "\n";
     
-    echo "\nAposta escolhida:\n";
-    echo join(' ', $numerosEscolhidos) . "\n";
+    print "\nAposta escolhida:\n";
+    print join(' ', $numerosEscolhidos) . "\n";
     verificaResultado($numerosSorteados, $numerosEscolhidos);
-    echo "\n";
+    print "\n";
 
     
     $numeroDezenas = count($numeroDezenas);
 
 } else {
-    echo "Opção inválida.\n";
+    print "Opção inválida.\n";
     exit();
 }
 
-$totalGasto = calculaTotalGasto($quantidadeApostas, $params['valoresAposta'][$numeroDezenas]);
-echo "Total gasto em reais: R$ $totalGasto\n";
+$totalGasto = calculaTotalGasto($quantidadeApostas, $parametros['valoresAposta'][$numeroDezenas]);
+print "Total gasto em reais: R$ $totalGasto\n";
